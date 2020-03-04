@@ -92,6 +92,7 @@ def get_href_from_page(board_name, scrap_page):
 
         url_list = []
         for i in range(total_page_index, total_page_index-scrap_page, -1):
+        	time.sleep(random.uniform(0,2)) #爬取每頁網址所有文章連結時sleep，避免IP被擋
             req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
             req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index'+str(i)+'.html',verify = False)
             web_content = req.text
