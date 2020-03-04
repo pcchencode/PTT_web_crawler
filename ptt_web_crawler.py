@@ -1,6 +1,6 @@
 import re
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup #install bs4, install lxml
 import pandas as pd
 import datetime as dt
 import random
@@ -112,7 +112,7 @@ def get_href_from_page(board_name, scrap_page):
 
 
 def main(Board_Name, Scrap_Page):
-    post_list = get_href_from_page(board_name=Board_Name, scrap_page=Scrap_Page)
+    post_list = get_href_from_page(board_name=str(Board_Name), scrap_page=Scrap_Page)
     all_post_info = get_post_data(post_list[0])[0] 
     for i in range(1, len(post_list)):
         try:
@@ -127,8 +127,15 @@ def main(Board_Name, Scrap_Page):
         except:
             pass
 
-        
-    return all_post_info, all_msg
+    all_post_info.to_csv('all_post_info.csv')
+    all_msg.to_csv('all_msg.csv')
+
+    return 
+
+
+
+
+
 
 
 if __name__ == '__main__':
