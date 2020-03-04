@@ -16,7 +16,7 @@ def get_post_data(post_url):
     'yes':'yes' 
     }
 
-    #破除18歲的限制
+    #有些版有年齡限制，點選確定滿18歲
     rs = requests.session()
     req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
     req = rs.get('https://www.ptt.cc/bbs/'+ 'Gossiping' +'/index.html',verify = False)
@@ -24,7 +24,7 @@ def get_post_data(post_url):
 
     if req.status_code==200:
         web_content = req.text
-        #以美味湯解析html
+        #使用lxml解析html、速度較快
         soup = BeautifulSoup(web_content, 'lxml')
         main_content = soup.find('div',id="main-content")
         metas = main_content.select('div.article-metaline')
@@ -78,13 +78,13 @@ def get_href_from_page(board_name, scrap_page):
     'yes':'yes' 
     }
 
-    #破除18歲的限制
+    
     rs = requests.session()
     req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
     req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index.html',verify = False)
     if req.status_code==200:
         web_content = req.text
-        #以美味湯解析html
+        
         soup = BeautifulSoup(web_content, 'lxml')
         pre_num = soup.select('div.btn-group > a')[3]['href'].replace('/bbs/'+board_name+'/index','') ##
         pre_num = pre_num.replace('.html','')
@@ -95,7 +95,7 @@ def get_href_from_page(board_name, scrap_page):
             req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
             req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index'+str(i)+'.html',verify = False)
             web_content = req.text
-            #以美味湯解析html
+            
             soup = BeautifulSoup(web_content, 'lxml')
             post_list = soup.find_all('div',class_="title")
             for item in post_list:
@@ -129,7 +129,7 @@ def main(Board_Name, Scrap_Page):
     all_post_info.to_csv('all_post_info.csv')
     all_msg.to_csv('all_msg.csv')
         
-    return #
+    return 
 
 	#print(get_href_from_page(board_name=str(Board_Name), scrap_page=int(Scrap_Page)))
 
