@@ -131,13 +131,6 @@ def main(Board_Name, Scrap_Page):
         
     return #
 
-
-
-
-
-
-
-
 	#print(get_href_from_page(board_name=str(Board_Name), scrap_page=int(Scrap_Page)))
 
 
