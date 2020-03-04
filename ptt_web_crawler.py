@@ -10,7 +10,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import argparse
 
 
-
 def get_post_data(post_url):
     payload={
     'from':'/bbs/'+ 'Gossiping' +'/index.html',
@@ -73,17 +72,16 @@ def get_post_data(post_url):
     else:
         return "404"
 
-
 def get_href_from_page(board_name, scrap_page):
     payload={
-    'from':'/bbs/'+ board_name +'/index.html',
+    'from':'/bbs/'+ str(board_name) +'/index.html',
     'yes':'yes' 
     }
 
     #破除18歲的限制
     rs = requests.session()
     req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
-    req = rs.get('https://www.ptt.cc/bbs/'+ board_name +'/index.html',verify = False)
+    req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index.html',verify = False)
     if req.status_code==200:
         web_content = req.text
         #以美味湯解析html
@@ -95,7 +93,7 @@ def get_href_from_page(board_name, scrap_page):
         url_list = []
         for i in range(total_page_index, total_page_index-scrap_page, -1):
             req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
-            req = rs.get('https://www.ptt.cc/bbs/'+ board_name +'/index'+str(i)+'.html',verify = False)
+            req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index'+str(i)+'.html',verify = False)
             web_content = req.text
             #以美味湯解析html
             soup = BeautifulSoup(web_content, 'lxml')
@@ -111,31 +109,9 @@ def get_href_from_page(board_name, scrap_page):
         return "404"
 
 
+
 def main(Board_Name, Scrap_Page):
-    post_list = get_href_from_page(board_name=str(Board_Name), scrap_page=Scrap_Page)
-    all_post_info = get_post_data(post_list[0])[0] 
-    for i in range(1, len(post_list)):
-        try:
-            all_post_info = all_post_info.append(get_post_data(post_list[i])[0])
-        except:
-            pass
-
-    all_msg = get_post_data(post_list[0])[1] 
-    for i in range(1, len(post_list)):
-        try:
-            all_msg = all_msg.append(get_post_data(post_list[i])[1])    
-        except:
-            pass
-
-    all_post_info.to_csv('all_post_info.csv')
-    all_msg.to_csv('all_msg.csv')
-
-    return 
-
-
-
-
-
+	print(get_href_from_page(board_name=Board_Name, scrap_page=Scrap_Page))
 
 
 if __name__ == '__main__':
