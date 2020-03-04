@@ -110,8 +110,35 @@ def get_href_from_page(board_name, scrap_page):
 
 
 
+
 def main(Board_Name, Scrap_Page):
-	print(get_href_from_page(board_name=Board_Name, scrap_page=Scrap_Page))
+    post_list = get_href_from_page(board_name=str(Board_Name), scrap_page=int(Scrap_Page))
+    all_post_info = get_post_data(post_list[0])[0] 
+    for i in range(1, len(post_list)):
+        try:
+            all_post_info = all_post_info.append(get_post_data(post_list[i])[0])
+        except:
+            pass
+
+    all_msg = get_post_data(post_list[0])[1] 
+    for i in range(1, len(post_list)):
+        try:
+            all_msg = all_msg.append(get_post_data(post_list[i])[1])    
+        except:
+            pass
+    all_post_info.to_csv('all_post_info.csv')
+    all_msg.to_csv('all_msg.csv')
+        
+    return #
+
+
+
+
+
+
+
+
+	#print(get_href_from_page(board_name=str(Board_Name), scrap_page=int(Scrap_Page)))
 
 
 if __name__ == '__main__':
