@@ -1,14 +1,44 @@
 import re
 import requests
-from bs4 import BeautifulSoup #install bs4, install lxml
+from bs4 import BeautifulSoup # install bs4, install lxml
 import pandas as pd
 import datetime as dt
+import logging
+#from datetime import datetime, timedelta
+import traceback
+import os
 import random
 import time 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import argparse
 
+
+''' log_file setting '''
+ct8 = dt.datetime.now() #+ datetime.timedelta(hours=8)
+# file_path_dict = lbt.check_folder()
+
+logger = logging.getLogger()
+logger.setLevel(logging.NOTSET)
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s: - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S')
+
+os.mkdir('./log')
+log_path = os.path.join("./log", 'ptt_web_crawler{}.txt'.format(
+    dt.datetime.strftime(ct8, "%Y-%m-%d-%H%M%S"))) ##路徑名稱自己改，'.'代表當下路徑
+
+fh = logging.FileHandler(log_path)
+fh.setLevel(logging.WARNING)
+fh.setFormatter(formatter)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.WARNING)
+ch.setFormatter(formatter)
+
+logger.addHandler(ch)
+logger.addHandler(fh)
 
 def get_post_data(post_url):
     payload={
@@ -70,7 +100,7 @@ def get_post_data(post_url):
         return post_info, messages
 
     else:
-        return "404"
+        return 404
 
 def get_href_from_page(board_name, scrap_page):
     payload={
@@ -107,7 +137,7 @@ def get_href_from_page(board_name, scrap_page):
         return url_list
     
     else:
-        return "404"
+        return 404
 
 
 
@@ -136,8 +166,11 @@ def main(Board_Name, Scrap_Page):
 
 
 if __name__ == '__main__':
+
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-Board_Name', action='store')
 	parser.add_argument('-Scrap_Page', action='store')
 	args = parser.parse_args()
+	logging.warning('start')
 	main(args.Board_Name, args.Scrap_Page)
+	logging.warning('end')
