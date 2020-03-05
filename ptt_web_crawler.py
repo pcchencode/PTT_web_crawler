@@ -16,35 +16,35 @@ def get_post_data(post_url):
     'yes':'yes' 
     }
 
-    #有些版有年齡限制，點選確定滿18歲
+    # 有些版有年齡限制，點選確定滿18歲
     rs = requests.session()
-    req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
-    req = rs.get('https://www.ptt.cc/bbs/'+ 'Gossiping' +'/index.html',verify = False)
+    req = rs.post('https://www.ptt.cc/ask/over18', verify = False, data = payload)
+    req = rs.get('https://www.ptt.cc/bbs/'+ 'Gossiping' +'/index.html', verify = False)
     req = rs.get(post_url, verify=False)
 
-    if req.status_code==200:
+    if req.status_code == 200:
         web_content = req.text
-        #使用lxml解析html、速度較快
+        # 使用lxml解析html、速度較快
         soup = BeautifulSoup(web_content, 'lxml')
-        main_content = soup.find('div',id="main-content")
+        main_content = soup.find('div', id="main-content")
         metas = main_content.select('div.article-metaline')
 
         author = metas[0].select('span.article-meta-value')[0].text
         title = metas[1].select('span.article-meta-value')[0].text
         post_date = metas[2].select('span.article-meta-value')[0].text
-        author_ID = author.split('(',1)[0].replace(' ','')
-        author_name = author.split('(',1)[1].replace(')','')
+        author_ID = author.split('(', 1)[0].replace(' ', '')
+        author_name = author.split('(', 1)[1].replace(')', '')
 
-        #content篩選出文章內文
+        # content篩選出文章內文
         content = soup.find(id="main-content").text
-        target_content=u'※ 發信站: 批踢踢實業坊(ptt.cc),'
+        target_content = u'※ 發信站: 批踢踢實業坊(ptt.cc),'
         content = content.split(target_content)
         date = soup.select('.article-meta-value')[3].text
         content = content[0].split(date)
         content = content[1].replace('\n', '  ').replace('\t', '  ')
 
-        #note = soup.select('span.f2')
-        #org_url = note[1].text.replace('※ 文章網址: ','')
+        # note = soup.select('span.f2')
+        # org_url = note[1].text.replace('※ 文章網址: ','')
         createdTime = dt.datetime.today().strftime("%d/%m/%Y %H:%M:%S")
         post_info = []
         post_info.append({'authorId':author_ID, 'authorName':author_name, 'title':title, 'publishedTime':post_date
@@ -65,7 +65,7 @@ def get_post_data(post_url):
 
         messages = pd.DataFrame(messages)
 
-        #post_data = pd.merge(post_info, messages, how='left', on='canonicalUrl')
+        # post_data = pd.merge(post_info, messages, how='left', on='canonicalUrl')
 
         return post_info, messages
 
