@@ -24,11 +24,11 @@ formatter = logging.Formatter(
     '%(asctime)s - %(name)s - %(levelname)s: - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S')
 try:
-    os.mkdir('./log')
+    os.mkdir('/work_dir/log')
 except FileExistsError:
     pass
 
-log_path = os.path.join("./log", 'ptt_web_crawler{}.txt'.format(
+log_path = os.path.join("/work_dir/log", 'ptt_web_crawler{}.txt'.format(
     dt.datetime.strftime(ct8, "%Y-%m-%d-%H%M%S"))) ##路徑名稱自己改，'.'代表當下路徑
 
 fh = logging.FileHandler(log_path)
@@ -159,8 +159,8 @@ def main(Board_Name, Scrap_Page):
             all_msg = all_msg.append(get_post_data(post_list[i])[1])    
         except:
             pass
-    all_post_info.to_csv('all_post_info.csv')
-    all_msg.to_csv('all_msg.csv')
+    all_post_info.to_csv('/work_dir/all_post_info.csv')
+    all_msg.to_csv('/work_dir/all_msg.csv')
         
     return 
 

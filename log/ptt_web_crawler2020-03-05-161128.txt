@@ -1,2 +1,0 @@
-2020-03-05 16:11:28 - root - WARNING: - start
-2020-03-05 16:11:44 - root - WARNING: - end
