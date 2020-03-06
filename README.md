@@ -20,4 +20,8 @@ docker run --mount type=bind,source={/YOUR/PATH/OF/LOCAL/WORKING/DIRECTORY},targ
 ```
 python3 ptt_web_crawler.py -Board_Name {欲爬取看板} -Scrap_Page {欲爬取頁數}
 ```
+***
+* 程式 log file
+1. 使用 `crontab` 建置排程
+2. 排程每次執行皆會將 log file 記錄在 `log` 資料夾中，檔案名稱為程式執行當下的時間，可藉此判斷排程是否有中斷或是異常
 
