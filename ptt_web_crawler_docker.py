@@ -24,12 +24,12 @@ formatter = logging.Formatter(
     '%(asctime)s - %(name)s - %(levelname)s: - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S')
 try:
-    os.mkdir('/work_dir/log')
+    os.mkdir('/work_dir/log') # 在 container/work_dir 中儲存一個 log file 用以紀錄
 except FileExistsError:
     pass
 
 log_path = os.path.join("/work_dir/log", 'ptt_web_crawler{}.txt'.format(
-    dt.datetime.strftime(ct8, "%Y-%m-%d-%H%M%S"))) ##路徑名稱自己改，'.'代表當下路徑
+    dt.datetime.strftime(ct8, "%Y-%m-%d-%H%M%S"))) # log 路徑名稱自己改
 
 fh = logging.FileHandler(log_path)
 fh.setLevel(logging.WARNING)
@@ -124,7 +124,7 @@ def get_href_from_page(board_name, scrap_page):
 
         url_list = []
         for i in range(total_page_index, total_page_index-scrap_page, -1):
-            time.sleep(random.uniform(0,2)) #爬取每頁網址所有文章時sleep，避免IP被擋
+            time.sleep(random.uniform(0,2)) # 爬取每頁網址所有文章時sleep，避免IP被擋
             req = rs.post('https://www.ptt.cc/ask/over18',verify = False, data = payload)
             req = rs.get('https://www.ptt.cc/bbs/'+ str(board_name) +'/index'+str(i)+'.html',verify = False)
             web_content = req.text
@@ -173,6 +173,6 @@ if __name__ == '__main__':
 	parser.add_argument('-Board_Name', action='store')
 	parser.add_argument('-Scrap_Page', action='store')
 	args = parser.parse_args()
-	logging.warning('start')
+	logging.warning('start') # 程式開始執行 log 
 	main(args.Board_Name, args.Scrap_Page)
-	logging.warning('end')
+	logging.warning('end') # 程式結束執行 log
