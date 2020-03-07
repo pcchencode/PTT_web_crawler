@@ -1,7 +1,7 @@
 ## PTT_web_crawler
 ### 使用方法：
 * Docker:
-1. download and install Docker desktop of [Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac/) or [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+1. download and install Docker desktop  [Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac/) or [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
 
 2. clone this repo and cd into this as working directory
 
