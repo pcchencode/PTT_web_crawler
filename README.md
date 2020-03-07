@@ -27,7 +27,7 @@ python3 ptt_web_crawler.py -Board_Name {欲爬取看板} -Scrap_Page {欲爬取�
 ### 檔案輸出與儲存格式
 * 程式會輸出以下兩檔案：
   - [all_post_info.csv](https://github.com/pcchencode/PTT_web_crawler/blob/master/all_post_info.csv): 爬取下來貼文的詳細資訊
-  - [all_msg.csv](https://github.com/pcchencode/PTT_web_crawler/blob/master/all_post_info.csv):各篇貼文的推文資訊
+  - [all_msg.csv](https://github.com/pcchencode/PTT_web_crawler/blob/master/all_msg.csv):各篇貼文的推文資訊
   - 範例檔：爬取 Beauty 表特版前 10 頁的所有貼文與其推文資訊
   
 * 檔案合併方式：
