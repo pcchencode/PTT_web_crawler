@@ -8,7 +8,7 @@
 3. build image from `Dockerfile` and run `ptt_web_crawler_docker.py` in container:
 ```
 docker build -t my_image .
-docker run --mount type=bind,source={/YOUR/PATH/OF/LOCAL/WORKING/DIRECTORY},target=/work_dir my_image python3 /work_dir/ptt_web_crawler_docker.py -Board_Name {看板名稱} -Scrap_Page {爬取頁數}
+docker run --mount type=bind,source={/YOUR/PATH/OF/LOCAL/WORKING/DIRECTORY},target={/work_dir} my_image python3 {/work_dir}/ptt_web_crawler_docker.py -Board_Name {看板名稱} -Scrap_Page {爬取頁數}
 ```
 
 * linux or terminal:
